@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const CartSlice=createSlice({
     name:'cart',
     initialState:{
-        isShown:false,
         cart:[],
         TotalQuantity:0,
     },
@@ -35,9 +34,6 @@ existingItem.total=existingItem.total+action.payload.price
     existingItem.total=existingItem.total-existingItem.price
             }
         },
- CartShowHandler(state){
-    state.isShown=!state.isShown
- }
     }
 })
 export const cartactions=CartSlice.actions;
