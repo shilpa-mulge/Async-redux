@@ -2,10 +2,7 @@ import { useSelector } from 'react-redux';
 import classes from './CartButton.module.css';
 
 const CartButton = (props) => {
-  const cart=useSelector(state=>state.cart.cart)
-  const totalQuantity=cart.reduce((cur,pre)=>(
-    cur+=pre.amount
-  ),0)
+  const totalQuantity=useSelector(state=>state.cart.TotalQuantity)
   return (
     <button className={classes.button}>
       <span>My Cart</span>

@@ -1,37 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const CartSlice=createSlice({
     name:'cart',
     initialState:{
         isShown:false,
         cart:[],
-        total:0,
+        TotalQuantity:0,
     },
     reducers:{
         AddToCart(state,action){
-             state.total = state.total + action.payload.price * action.payload.amount;
+            state.TotalQuantity++;
         const existItemIndex = state.cart.findIndex(item => item.id === action.payload.id)
         const existingItem = state.cart[existItemIndex];
-        if (existingItem) {
-            const updateItem = { ...existingItem, amount: Number(existingItem.amount) + Number(action.payload.amount) }
-            state.cart[existItemIndex] = updateItem;
+        if (!existingItem) {
+            state.cart.push({
+                id:action.payload.id,
+                title:action.payload.title,
+                price:action.payload.price,
+                total:action.payload.price,
+                amount:action.payload.amount
+            })
         } else {
-
-            state.cart = state.cart.concat(action.payload);
-        }
+existingItem.amount++;
+existingItem.total=existingItem.total+action.payload.price
+    }
         },
         RemoveFromCart(state,action){
+            state.TotalQuantity--;
             const existItemIndex = state.cart.findIndex(item => item.id === action.payload)
             const existingItem = state.cart[existItemIndex];
-            state.total = state.total - existingItem.price;
-
-            let updateItem;
             if (existingItem.amount === 1) {
                 state.cart = state.cart.filter((item) => item.id !== action.payload);
             } else {
-    
-                updateItem = { ...existingItem, amount: Number(existingItem.amount) - 1 }
-                state.cart[existItemIndex] = updateItem;
+    existingItem.amount--;
+    existingItem.total=existingItem.total-existingItem.price
             }
         },
  CartShowHandler(state){
